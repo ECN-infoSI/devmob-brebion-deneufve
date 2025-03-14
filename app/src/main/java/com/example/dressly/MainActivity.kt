@@ -19,12 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DresslyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                DresslyApp()
             }
         }
     }
@@ -45,3 +40,4 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
