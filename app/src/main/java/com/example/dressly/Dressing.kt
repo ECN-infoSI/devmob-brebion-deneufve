@@ -15,10 +15,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.example.dressly.ui.theme.DresslyTheme
+import android.content.Context
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import kotlinx.serialization.*
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.serialization.json.*
 
 @Composable
 fun DresslyApp() {
     val navController = rememberNavController()
+    val context = LocalContext.current
 
     NavHost(
         navController = navController,
@@ -36,11 +44,11 @@ fun DresslyApp() {
             )
         ) { backStackEntry ->
             val drawableId = backStackEntry.arguments?.getInt("drawableId") ?: return@composable
-            val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
-            val category = backStackEntry.arguments?.getString("category") ?: ""
-            val tags = backStackEntry.arguments?.getString("tags")?.split(",") ?: emptyList()
-            val description = backStackEntry.arguments?.getString("description") ?: ""
-
+            val clothingItem = getClothingById(drawableId, context)  // Charge l'objet ClothingItem à partir de l'ID
+            val fileName = clothingItem?.name ?: "Inconnu"
+            val tags = clothingItem?.tags ?: emptyList()
+            val category = clothingItem?.category ?: "Tout"
+            val description = clothingItem?.description ?: "Pas de description"
             VetementScreen(navController, drawableId, fileName, category, tags, description)
         }
     }
@@ -51,13 +59,13 @@ fun DresslyApp() {
 fun HomeScreen(navController: NavHostController) {
     var selectedTab by remember { mutableStateOf(0) }
     var selectedCategory by remember { mutableStateOf("Tous") }
-
+    val context = LocalContext.current
     val categories = listOf("Tous", "T-Shirts", "Pantalons", "SweatsGilets")
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Dressing") },
+                title = { Text("Dressly") },
                 navigationIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_logo),
@@ -66,6 +74,7 @@ fun HomeScreen(navController: NavHostController) {
                     )
                 }
             )
+
         },
         bottomBar = {
             BottomNavigationBar(selectedTab, onTabSelected = { selectedTab = it })
@@ -73,40 +82,42 @@ fun HomeScreen(navController: NavHostController) {
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             if (selectedTab == 0) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(text = "Dressing", style = MaterialTheme.typography.headlineMedium)
+                }
                 CategorySelector(categories, selectedCategory) { selectedCategory = it }
-                ClothesGrid(getSelectedClothes(selectedCategory), selectedCategory, navController)
+                ClothesGrid(getSelectedClothes(selectedCategory, context), selectedCategory, navController, context)
             } else {
                 TenueScreen()
             }
         }
     }
+
 }
 
-fun getSelectedClothes(category: String): List<Int> {
-    val clothesMap = mapOf(
-        "Tous" to listOf(R.drawable.tee000001, R.drawable.tee000002, R.drawable.pant_000001, R.drawable.pant_000002, R.drawable.sweat000001, R.drawable.sweat000002),
-        "T-Shirts" to listOf(R.drawable.tee000001, R.drawable.tee000002),
-        "Pantalons" to listOf(R.drawable.pant_000001, R.drawable.pant_000002),
-        "SweatsGilets" to listOf(R.drawable.sweat000001, R.drawable.sweat000002)
-    )
-    return clothesMap[category] ?: emptyList()
+fun getSelectedClothes(category: String, context : Context): List<Int> {
+    val clothesData = loadClothingData(context)
+
+    // Filtrer les vêtements par catégorie
+    return clothesData.filter { it.category == category || category == "Tous" }
+        .map { it.id }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ClothesGrid(clothes: List<Int>, category: String, navController: NavController) {
-    FlowRow(
-        modifier = Modifier.fillMaxWidth(),
-        maxItemsInEachRow = 2
+fun ClothesGrid(clothes: List<Int>, category: String, navController: NavController, context : Context) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2), // 2 vêtements par ligne
+        modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
-        clothes.forEach { drawableId ->
-            val fileName = "file_$drawableId"
-            val tags = listOf("Tag1", "Tag2")
-            val description = "Description du vêtement $fileName"
-
+        items(clothes) { drawableId ->
+            val clothingItem = getClothingById(drawableId, context)  // Charge l'objet ClothingItem à partir de l'ID
+            val fileName = clothingItem?.name ?: "Inconnu"
+            val tags = clothingItem?.tags ?: emptyList()
+            val description = clothingItem?.description ?: "Pas de description"
             Image(
                 painter = painterResource(id = drawableId),
-                contentDescription = null,
+                contentDescription = description,
                 modifier = Modifier
                     .size(150.dp)
                     .padding(8.dp)
@@ -117,6 +128,26 @@ fun ClothesGrid(clothes: List<Int>, category: String, navController: NavControll
             )
         }
     }
+}
+
+@Serializable
+data class ClothingItem(
+    val id: Int,
+    val drawable: String,
+    val name: String,
+    val category: String,
+    val tags: List<String>,
+    val description: String
+)
+
+fun loadClothingData(context: Context): List<ClothingItem> {
+    val jsonString = context.assets.open("info_vetements.json").bufferedReader().use { it.readText() }
+    return Json.decodeFromString(jsonString)
+}
+
+fun getClothingById(id: Int, context: Context): ClothingItem? {
+    val clothes = loadClothingData(context)
+    return clothes.find { it.id == id }
 }
 
 @Composable

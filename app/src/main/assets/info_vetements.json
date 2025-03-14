@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "drawable": "tee000001",
+    "name": "T-Shirt Blanc",
+    "category": "T-Shirts",
+    "tags": ["Coton", "Casual"],
+    "description": "Un t-shirt blanc basique en coton."
+  },
+  {
+    "id": 2,
+    "drawable": "pant_000001",
+    "name": "Jean Bleu",
+    "category": "Pantalons",
+    "tags": ["Denim", "Classique"],
+    "description": "Un jean bleu foncé pour toutes occasions."
+  },
+  {
+    "id": 3,
+    "drawable": "pant_000001",
+    "name": "Jean Bleu",
+    "category": "Pantalons",
+    "tags": ["Denim", "Classique"],
+    "description": "Un jean bleu foncé pour toutes occasions."
+  },
+  {
+    "id": 4,
+    "drawable": "pant_000001",
+    "name": "Jean Bleu",
+    "category": "Pantalons",
+    "tags": ["Denim", "Classique"],
+    "description": "Un jean bleu foncé pour toutes occasions."
+  },
+  {
+    "id": 5,
+    "drawable": "pant_000001",
+    "name": "Jean Bleu",
+    "category": "Pantalons",
+    "tags": ["Denim", "Classique"],
+    "description": "Un jean bleu foncé pour toutes occasions."
+  },
+  {
+    "id": 6,
+    "drawable": "pant_000001",
+    "name": "Jean Bleu",
+    "category": "Pantalons",
+    "tags": ["Denim", "Classique"],
+    "description": "Un jean bleu foncé pour toutes occasions."
+  }
+]
