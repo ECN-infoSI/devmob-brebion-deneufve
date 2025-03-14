@@ -1,11 +1,14 @@
 package com.example.dressly
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -107,6 +110,7 @@ fun ClothesGrid(clothes: List<Int>, category: String, navController: NavControll
                 modifier = Modifier
                     .size(150.dp)
                     .padding(8.dp)
+                    .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
                     .clickable {
                         navController.navigate("vetement/$drawableId/$fileName/$category/${tags.joinToString(",")}/$description")
                     }
