@@ -11,7 +11,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,8 +23,11 @@ import android.util.Log
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
 import kotlinx.serialization.*
 import androidx.compose.ui.platform.LocalContext
+import com.example.dressly.ui.theme.DresslyGray
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.*
 import java.io.FileNotFoundException
@@ -73,25 +75,40 @@ fun HomeScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Dressly") },
+                title = { Text(
+                    text = "Dressly",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.headlineSmall
+                ) },
                 navigationIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_logo),
                         contentDescription = "Logo",
-                        modifier = Modifier.size(40.dp).padding(8.dp)
+                        modifier = Modifier.size(40.dp).padding(8.dp),
+                        tint = Color.Unspecified
                     )
-                }
+                },
+                modifier = Modifier.background(MaterialTheme.colorScheme.primary)
             )
-
         },
         bottomBar = {
             BottomNavigationBar(selectedTab, onTabSelected = { selectedTab = it })
-        }
+        },
+        modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background) // Set background color of the page
+        ) {
             if (selectedTab == 0) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = "Dressing", style = MaterialTheme.typography.headlineMedium)
+                    Text(
+                        text = "Dressing",
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = MaterialTheme.colorScheme.onBackground // Set text color
+                    )
                 }
                 CategorySelector(categories, selectedCategory) { selectedCategory = it }
                 ClothesGrid(getSelectedClothes(selectedCategory, context), selectedCategory, navController, context)
@@ -135,7 +152,8 @@ fun ClothesGrid(clothes: List<String>, category: String, navController: NavContr
                 modifier = Modifier
                     .size(150.dp)
                     .padding(8.dp)
-                    .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant,
+                        shape = RoundedCornerShape(5.dp)) // Change background color
                     .clickable {
                         navController.navigate("vetement/$id/$fileName/$category/${tags.joinToString(",")}/$description")
                     }
@@ -159,7 +177,8 @@ fun loadClothingData(context: Context): List<ClothingItem> {
         val inputStream = context.assets.open("info_vetements.json")
         val jsonString = inputStream.bufferedReader().use { it.readText() }
         Log.d("ClothingLoader", "Successfully read file content.")
-        val clothingList: List<ClothingItem> = Json.decodeFromString(ListSerializer(ClothingItem.serializer()), jsonString)
+        val clothingList: List<ClothingItem> = Json.decodeFromString(
+            ListSerializer(ClothingItem.serializer()), jsonString)
         Log.d("ClothingLoader", "Successfully parsed file content: $clothingList")
         clothingList
     } catch (e: FileNotFoundException) {
@@ -183,13 +202,19 @@ fun getClothingById(id: String, context: Context): ClothingItem? {
 }
 
 @Composable
-fun CategorySelector(categories: List<String>, selectedCategory: String, onCategorySelected: (String) -> Unit) {
-    Row(modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+fun CategorySelector(categories: List<String>,
+                     selectedCategory: String,
+                     onCategorySelected: (String) -> Unit) {
+    Row(modifier = Modifier.fillMaxWidth().padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly) {
         categories.forEach { category ->
+            val isSelected = category == selectedCategory
             Text(
                 text = category,
                 modifier = Modifier.clickable { onCategorySelected(category) },
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.labelLarge,
+                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
+                else DresslyGray, // Different color when selected
             )
         }
     }
@@ -201,14 +226,16 @@ fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
         NavigationBarItem(
             selected = selectedTab == 0,
             onClick = { onTabSelected(0) },
-            icon = { Icon(painterResource(id = R.drawable.dressing), contentDescription = "Dressing") },
+            icon = { Icon(painterResource(id = R.drawable.dressing),
+                contentDescription = "Dressing", tint = Color.Unspecified) },
             label = { Text("Dressing") },
             modifier = Modifier.size(24.dp)
         )
         NavigationBarItem(
             selected = selectedTab == 1,
             onClick = { onTabSelected(1) },
-            icon = { Icon(painterResource(id = R.drawable.tenue), contentDescription = "Tenue") },
+            icon = { Icon(painterResource(id = R.drawable.tenue),
+                contentDescription = "Tenue", tint = Color.Unspecified) },
             label = { Text("Tenue") },
             modifier = Modifier.size(24.dp)
         )
@@ -224,8 +251,8 @@ fun TenueScreen(modifier: Modifier = Modifier) {
     ) {
         // Titre en haut à gauche
         Text(
-            text = "Faire une Tenue",
-            style = MaterialTheme.typography.headlineMedium
+            text = "Créer une Tenue",
+            style = MaterialTheme.typography.headlineLarge
         )
 
         Spacer(modifier = Modifier.height(32.dp)) // Espace après le titre

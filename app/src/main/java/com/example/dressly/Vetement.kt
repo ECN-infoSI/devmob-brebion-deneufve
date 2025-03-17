@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import android.content.Context
+import com.example.dressly.ui.theme.DresslyWhite
 
 @Composable
 fun VetementScreen(
@@ -32,7 +33,7 @@ fun VetementScreen(
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         // Bouton retour
         IconButton(onClick = { navController.popBackStack() }) {
-            Icon(painterResource(id = R.drawable.ic_retour), contentDescription = "Retour")
+            Icon(painterResource(id = R.drawable.ic_retour), contentDescription = "Retour", tint = Color.Unspecified)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -44,7 +45,7 @@ fun VetementScreen(
                 contentDescription = null,
                 modifier = Modifier
                     .size(150.dp)
-                    .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(8.dp))
             )
         } else {
             Text("Image introuvable : $id", color = Color.Red)
@@ -53,7 +54,7 @@ fun VetementScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Nom du vêtement
-        Text(text = name, fontSize = 22.sp, fontWeight = FontWeight.Bold)
+        Text(text = name, style = MaterialTheme.typography.headlineMedium,)
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -63,9 +64,9 @@ fun VetementScreen(
                 Text(
                     text = tag,
                     modifier = Modifier
-                        .background(Color(0xFFA8E6CF), shape = RoundedCornerShape(12.dp))
+                        .background(Color(0xFF8ABDAA), shape = RoundedCornerShape(12.dp))
                         .padding(8.dp),
-                    fontSize = 14.sp
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.width(4.dp))
             }
@@ -74,13 +75,14 @@ fun VetementScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Catégorie
-        Text(text = category, fontSize = 16.sp, fontWeight = FontWeight.Light)
+        Text(text = "Catégorie", style = MaterialTheme.typography.headlineSmall,)
+        Text(text = category, style = MaterialTheme.typography.bodyMedium,)
 
         Spacer(modifier = Modifier.height(32.dp))
 
         // Description
-        Text(text = "Description", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-        Text(text = description, fontSize = 14.sp)
+        Text(text = "Description", style = MaterialTheme.typography.headlineSmall,)
+        Text(text = description, style = MaterialTheme.typography.bodyMedium)
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -90,16 +92,16 @@ fun VetementScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { /* Ajouter un tag */ }) {
-                Text("+ Ajouter un tag")
+            Button(onClick = { /* Ajouter un tag */ }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)) {
+                Text("+ Ajouter un tag", color = DresslyWhite,  style = MaterialTheme.typography.bodyLarge)
             }
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
             Button(onClick = { /* Ajouter une photo */ }) {
-                Text("+ Ajouter une photo")
+                Text("+ Ajouter une photo", color = DresslyWhite,  style = MaterialTheme.typography.bodyLarge)
             }
-            Spacer(modifier = Modifier.height(4.dp))
-            Button(onClick = { /* Supprimer */ }, colors = ButtonDefaults.buttonColors(containerColor = Color.Red)) {
-                Text("Supprimer")
+            Spacer(modifier = Modifier.height(2.dp))
+            Button(onClick = { /* Supprimer */ }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)) {
+                Text("Supprimer", color = DresslyWhite, style = MaterialTheme.typography.bodyLarge)
             }
         }
     }
