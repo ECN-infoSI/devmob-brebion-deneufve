@@ -1,44 +1,44 @@
 [
   {
     "id": "tee01",
-    "name": "T-Shirt Blanc",
+    "name": "T-Shirt Vert Fluo",
     "category": "T-Shirts",
-    "tags": ["Coton", "Casual", "Léger"],
-    "description": "Un t-shirt blanc en coton, parfait pour un look décontracté en été."
+    "tags": ["Sport", "Léger", "Flashy"],
+    "description": "Un t-shirt vert fluo en polyester, parfait pour ma séance de sport "
   },
   {
     "id" : "pant01",
-    "name": "Jean Slim Bleu",
+    "name": "Pantalon en toile Rose",
     "category": "Pantalons",
-    "tags": ["Denim", "Mode", "Polyvalent"],
-    "description": "Un jean slim en denim bleu, adapté à toutes les occasions."
+    "tags": ["Mode", "Soirée", "Flashy", "Casual"],
+    "description": "Un pantalon rose parfait pour les soirées, mais aussi idéal pour un look casual"
   },
   {
     "id": "pant02",
-    "name": "Jean Droit Noir",
+    "name": "Jogging Noir",
     "category": "Pantalons",
-    "tags": ["Denim", "Élégant", "Classique"],
-    "description": "Un jean droit noir pour un style chic et intemporel."
+    "tags": ["Décontracté", "Sport"],
+    "description": "Un jogging noir classique, pour faire du sport ou du Netflix and Chill à la maison"
   },
   {
     "id": "tee02",
-    "name": "T-Shirt Graphique",
+    "name": "T-Shirt Noir",
     "category": "T-Shirts",
-    "tags": ["Coton", "Graphique", "Tendance"],
-    "description": "Un t-shirt avec un imprimé graphique moderne."
+    "tags": ["Coton", "Uni", "Tendance"],
+    "description": "Un t-shirt noir classique"
   },
   {
     "id": "sweat01",
-    "name": "Sweat à Capuche Gris",
+    "name": "Sweat à Gentle Mates",
     "category": "SweatsGilets",
-    "tags": ["Chaud", "Décontracté", "Hiver"],
-    "description": "Un sweat gris doux et chaud pour un confort optimal en hiver."
+    "tags": ["Chaud", "E-sport", "Hiver"],
+    "description": "Un sweat chaud idéal pour support son équipe e-sport favorite"
   },
   {
     "id": "sweat02",
-    "name": "Gilet Zippé Noir",
+    "name": "Sweat à capuche noir",
     "category": "SweatsGilets",
     "tags": ["Élégant", "Chaud", "Confort"],
-    "description": "Un gilet zippé noir sobre et élégant pour les journées fraîches."
+    "description": "Un sweat à capuches noir sobre et élégant pour les journées fraîches."
   }
 ]
