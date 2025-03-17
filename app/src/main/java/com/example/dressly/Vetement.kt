@@ -93,11 +93,11 @@ fun VetementScreen(
             Button(onClick = { /* Ajouter un tag */ }) {
                 Text("+ Ajouter un tag")
             }
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Button(onClick = { /* Ajouter une photo */ }) {
                 Text("+ Ajouter une photo")
             }
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Button(onClick = { /* Supprimer */ }, colors = ButtonDefaults.buttonColors(containerColor = Color.Red)) {
                 Text("Supprimer")
             }

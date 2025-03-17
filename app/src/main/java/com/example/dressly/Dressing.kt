@@ -20,12 +20,16 @@ import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.example.dressly.ui.theme.DresslyTheme
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import kotlinx.serialization.*
 import androidx.compose.ui.platform.LocalContext
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.*
+import java.io.FileNotFoundException
+import java.io.IOException
 
 @Composable
 fun DresslyApp() {
@@ -142,21 +146,34 @@ fun ClothesGrid(clothes: List<String>, category: String, navController: NavContr
 
 @Serializable
 data class ClothingItem(
-    val id: Int,
-    val drawable: String,
-    val name: String,
-    val category: String,
-    val tags: List<String>,
-    val description: String
+    @SerialName("id") val drawable: String, // Changed the name to drawable
+    @SerialName("name") val name: String,
+    @SerialName("category") val category: String,
+    @SerialName("tags") val tags: List<String>,
+    @SerialName("description") val description: String
 )
 
 fun loadClothingData(context: Context): List<ClothingItem> {
+    Log.d("ClothingLoader", "Attempting to load clothing data...")
     return try {
-        val jsonString = context.assets.open("info_vetements.json").bufferedReader().use { it.readText() }
-        Json.decodeFromString(jsonString)
+        val inputStream = context.assets.open("info_vetements.json")
+        val jsonString = inputStream.bufferedReader().use { it.readText() }
+        Log.d("ClothingLoader", "Successfully read file content.")
+        val clothingList: List<ClothingItem> = Json.decodeFromString(ListSerializer(ClothingItem.serializer()), jsonString)
+        Log.d("ClothingLoader", "Successfully parsed file content: $clothingList")
+        clothingList
+    } catch (e: FileNotFoundException) {
+        Log.e("ClothingLoader", "Error: File 'info_vetements.json' not found in assets folder.", e)
+        emptyList()
+    } catch (e: SerializationException) {
+        Log.e("ClothingLoader", "Error: Invalid JSON format in 'info_vetements.json'.", e)
+        emptyList()
+    } catch (e: IOException) {
+        Log.e("ClothingLoader", "Error: An error occurred while reading 'info_vetements.json'.", e)
+        emptyList()
     } catch (e: Exception) {
-        e.printStackTrace()  // Affiche l'erreur dans Logcat
-        emptyList()  // Retourne une liste vide en cas d'échec
+        Log.e("ClothingLoader", "Error: An unexpected error occurred.", e)
+        emptyList()
     }
 }
 
