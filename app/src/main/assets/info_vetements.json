@@ -29,7 +29,7 @@
   },
   {
     "id": "sweat01",
-    "name": "Sweat à Gentle Mates",
+    "name": "Sweat Gentle Mates",
     "category": "SweatsGilets",
     "tags": ["Chaud", "E-sport", "Hiver"],
     "description": "Un sweat chaud idéal pour support son équipe e-sport favorite"
@@ -46,7 +46,7 @@
     "id": "chapeau",
     "name": "Chapeau Zèbre",
     "category": "Couvre-chefs",
-    "tags": ["Élégant", "Chaud", "Confort"],
+    "tags": ["Élégant", "Fantaisie", "Classe"],
     "description": "Un chapeau zèbré ultra-classe parfait pour les soirées comme le Nouvel An par exemple"
   },
 
@@ -54,7 +54,39 @@
     "id": "chapeau2",
     "name": "Chapeau d'anniversaire",
     "category": "Couvre-chefs",
-    "tags": ["Confort"],
+    "tags": ["Confort", "Grandes Occasions"],
     "description": "Joyeux anniversaire !!!"
+  },
+
+  {
+    "id": "chapeau3",
+    "name": "Chapeau de flamenco",
+    "category": "Couvre-chefs",
+    "tags": ["Culture", "Danse"],
+    "description": "Bailando !!!"
+  },
+
+  {
+    "id": "chaussures",
+    "name": "Chaussures de sécurité",
+    "category": "Chaussures",
+    "tags": ["Travail", "Sécurité"],
+    "description": "Je dois aller au taff trop relou..."
+  },
+
+  {
+    "id": "chaussures2",
+    "name": "Chaussures de moto",
+    "category": "Chaussures",
+    "tags": ["Confort", "Moto", "Swag"],
+    "description": "Pour ne pas avoir mal aux pieds quand je ride le bitume"
+  },
+
+  {
+    "id": "veste",
+    "name": "Blouson en cuir",
+    "category": "Vestes",
+    "tags": ["Classe", "Moto"],
+    "description": "Mon blouson préféré pour les sorties en moto entre amis"
   }
 ]

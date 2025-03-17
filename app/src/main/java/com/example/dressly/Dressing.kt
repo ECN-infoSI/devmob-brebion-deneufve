@@ -72,7 +72,7 @@ fun HomeScreen(navController: NavHostController) {
     var selectedTab by remember { mutableStateOf(0) }
     var selectedCategory by remember { mutableStateOf("Tous") }
     val context = LocalContext.current
-    val categories = listOf("Tous", "T-Shirts", "Pantalons", "SweatsGilets", "Couvre-chefs")
+    val categories = listOf("Tous", "T-Shirts", "Pantalons", "SweatsGilets", "Couvre-chefs", "Chaussures", "Vestes")
 
     Scaffold(
         topBar = {
