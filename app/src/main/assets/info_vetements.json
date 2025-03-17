@@ -40,5 +40,21 @@
     "category": "SweatsGilets",
     "tags": ["Élégant", "Chaud", "Confort"],
     "description": "Un sweat à capuches noir sobre et élégant pour les journées fraîches."
+  },
+
+  {
+    "id": "chapeau",
+    "name": "Chapeau Zèbre",
+    "category": "Couvre-chefs",
+    "tags": ["Élégant", "Chaud", "Confort"],
+    "description": "Un chapeau zèbré ultra-classe parfait pour les soirées comme le Nouvel An par exemple"
+  },
+
+  {
+    "id": "chapeau2",
+    "name": "Chapeau d'anniversaire",
+    "category": "Couvre-chefs",
+    "tags": ["Confort"],
+    "description": "Joyeux anniversaire !!!"
   }
 ]
