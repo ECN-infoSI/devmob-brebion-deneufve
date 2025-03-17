@@ -1,50 +1,44 @@
 [
   {
-    "id": 1,
-    "drawable": "tee000001",
+    "id": "tee01",
     "name": "T-Shirt Blanc",
     "category": "T-Shirts",
-    "tags": ["Coton", "Casual"],
-    "description": "Un t-shirt blanc basique en coton."
+    "tags": ["Coton", "Casual", "Léger"],
+    "description": "Un t-shirt blanc en coton, parfait pour un look décontracté en été."
   },
   {
-    "id": 2,
-    "drawable": "pant_000001",
-    "name": "Jean Bleu",
+    "id" : "pant01",
+    "name": "Jean Slim Bleu",
     "category": "Pantalons",
-    "tags": ["Denim", "Classique"],
-    "description": "Un jean bleu foncé pour toutes occasions."
+    "tags": ["Denim", "Mode", "Polyvalent"],
+    "description": "Un jean slim en denim bleu, adapté à toutes les occasions."
   },
   {
-    "id": 3,
-    "drawable": "pant_000001",
-    "name": "Jean Bleu",
+    "id": "pant02",
+    "name": "Jean Droit Noir",
     "category": "Pantalons",
-    "tags": ["Denim", "Classique"],
-    "description": "Un jean bleu foncé pour toutes occasions."
+    "tags": ["Denim", "Élégant", "Classique"],
+    "description": "Un jean droit noir pour un style chic et intemporel."
   },
   {
-    "id": 4,
-    "drawable": "pant_000001",
-    "name": "Jean Bleu",
-    "category": "Pantalons",
-    "tags": ["Denim", "Classique"],
-    "description": "Un jean bleu foncé pour toutes occasions."
+    "id": "tee02",
+    "name": "T-Shirt Graphique",
+    "category": "T-Shirts",
+    "tags": ["Coton", "Graphique", "Tendance"],
+    "description": "Un t-shirt avec un imprimé graphique moderne."
   },
   {
-    "id": 5,
-    "drawable": "pant_000001",
-    "name": "Jean Bleu",
-    "category": "Pantalons",
-    "tags": ["Denim", "Classique"],
-    "description": "Un jean bleu foncé pour toutes occasions."
+    "id": "sweat01",
+    "name": "Sweat à Capuche Gris",
+    "category": "SweatsGilets",
+    "tags": ["Chaud", "Décontracté", "Hiver"],
+    "description": "Un sweat gris doux et chaud pour un confort optimal en hiver."
   },
   {
-    "id": 6,
-    "drawable": "pant_000001",
-    "name": "Jean Bleu",
-    "category": "Pantalons",
-    "tags": ["Denim", "Classique"],
-    "description": "Un jean bleu foncé pour toutes occasions."
+    "id": "sweat02",
+    "name": "Gilet Zippé Noir",
+    "category": "SweatsGilets",
+    "tags": ["Élégant", "Chaud", "Confort"],
+    "description": "Un gilet zippé noir sobre et élégant pour les journées fraîches."
   }
 ]

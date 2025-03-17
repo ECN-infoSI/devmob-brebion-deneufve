@@ -14,16 +14,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import android.content.Context
 
 @Composable
 fun VetementScreen(
     navController: NavController,
-    drawableId: Int,
+    id: String,
     name: String,
     category: String,
     tags: List<String>,
-    description: String
+    description: String,
+    context: Context
 ) {
+    // Récupérer l'ID de la ressource drawable
+    val drawableResId = context.resources.getIdentifier(id, "drawable", context.packageName)
+
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         // Bouton retour
         IconButton(onClick = { navController.popBackStack() }) {
@@ -32,14 +37,18 @@ fun VetementScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Image du vêtement
-        Image(
-            painter = painterResource(id = drawableId),
-            contentDescription = null,
-            modifier = Modifier
-                .size(150.dp)
-                .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
-        )
+        // Affichage de l'image du vêtement
+        if (drawableResId != 0) {
+            Image(
+                painter = painterResource(id = drawableResId),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(150.dp)
+                    .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
+            )
+        } else {
+            Text("Image introuvable : $id", color = Color.Red)
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 

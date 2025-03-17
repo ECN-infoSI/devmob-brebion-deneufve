@@ -38,22 +38,22 @@ fun DresslyApp() {
     ) {
         composable("dressly") { HomeScreen(navController) }
         composable(
-            "vetement/{drawableId}/{fileName}/{category}/{tags}/{description}",
+            "vetement/{id}/{fileName}/{category}/{tags}/{description}",
             arguments = listOf(
-                navArgument("drawableId") { type = NavType.IntType },
+                navArgument("id") { type = NavType.StringType },
                 navArgument("fileName") { type = NavType.StringType },
                 navArgument("category") { type = NavType.StringType },
                 navArgument("tags") { type = NavType.StringType },
                 navArgument("description") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val drawableId = backStackEntry.arguments?.getInt("drawableId") ?: return@composable
-            val clothingItem = getClothingById(drawableId, context)  // Charge l'objet ClothingItem à partir de l'ID
+            val id = backStackEntry.arguments?.getString("id") ?: return@composable
+            val clothingItem = getClothingById(id, context)  // Charge l'objet ClothingItem à partir de l'ID
             val fileName = clothingItem?.name ?: "Inconnu"
             val tags = clothingItem?.tags ?: emptyList()
             val category = clothingItem?.category ?: "Tout"
             val description = clothingItem?.description ?: "Pas de description"
-            VetementScreen(navController, drawableId, fileName, category, tags, description)
+            VetementScreen(navController, id, fileName, category, tags, description, context)
         }
     }
 }
@@ -99,35 +99,41 @@ fun HomeScreen(navController: NavHostController) {
 
 }
 
-fun getSelectedClothes(category: String, context : Context): List<Int> {
+fun getSelectedClothes(category: String, context: Context): List<String> {
     val clothesData = loadClothingData(context)
 
-    // Filtrer les vêtements par catégorie
+    // Filtrer les vêtements par catégorie et récupérer `drawable` (String)
     return clothesData.filter { it.category == category || category == "Tous" }
-        .map { it.id }
+        .map { it.drawable }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ClothesGrid(clothes: List<Int>, category: String, navController: NavController, context : Context) {
+fun ClothesGrid(clothes: List<String>, category: String, navController: NavController, context: Context) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2), // 2 vêtements par ligne
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
-        items(clothes) { drawableId ->
-            val clothingItem = getClothingById(drawableId, context)  // Charge l'objet ClothingItem à partir de l'ID
+        items(clothes) { id ->
+            // Récupérer l'ID de la ressource à partir du nom du fichier
+            val drawableResId = context.resources.getIdentifier(id, "drawable", context.packageName)
+
+            // Charger l'objet ClothingItem en cherchant par `drawable`
+            val clothingItem = getClothingById(id, context)
+
             val fileName = clothingItem?.name ?: "Inconnu"
             val tags = clothingItem?.tags ?: emptyList()
             val description = clothingItem?.description ?: "Pas de description"
+
             Image(
-                painter = painterResource(id = drawableId),
+                painter = painterResource(id = drawableResId),
                 contentDescription = description,
                 modifier = Modifier
                     .size(150.dp)
                     .padding(8.dp)
                     .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
                     .clickable {
-                        navController.navigate("vetement/$drawableId/$fileName/$category/${tags.joinToString(",")}/$description")
+                        navController.navigate("vetement/$id/$fileName/$category/${tags.joinToString(",")}/$description")
                     }
             )
         }
@@ -145,13 +151,18 @@ data class ClothingItem(
 )
 
 fun loadClothingData(context: Context): List<ClothingItem> {
-    val jsonString = context.assets.open("info_vetements.json").bufferedReader().use { it.readText() }
-    return Json.decodeFromString(jsonString)
+    return try {
+        val jsonString = context.assets.open("info_vetements.json").bufferedReader().use { it.readText() }
+        Json.decodeFromString(jsonString)
+    } catch (e: Exception) {
+        e.printStackTrace()  // Affiche l'erreur dans Logcat
+        emptyList()  // Retourne une liste vide en cas d'échec
+    }
 }
 
-fun getClothingById(id: Int, context: Context): ClothingItem? {
+fun getClothingById(id: String, context: Context): ClothingItem? {
     val clothes = loadClothingData(context)
-    return clothes.find { it.id == id }
+    return clothes.find { it.drawable == id }
 }
 
 @Composable
