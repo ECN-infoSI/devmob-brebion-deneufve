@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import android.content.Context
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import com.example.dressly.ui.theme.DresslyWhite
 
 @Composable
@@ -30,7 +32,10 @@ fun VetementScreen(
     // Récupérer l'ID de la ressource drawable
     val drawableResId = context.resources.getIdentifier(id, "drawable", context.packageName)
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())) {
         // Bouton retour
         IconButton(onClick = { navController.popBackStack() }) {
             Icon(painterResource(id = R.drawable.ic_retour), contentDescription = "Retour", tint = Color.Unspecified)

@@ -20,9 +20,11 @@ import androidx.navigation.compose.*
 import com.example.dressly.ui.theme.DresslyTheme
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
 import kotlinx.serialization.*
@@ -70,7 +72,7 @@ fun HomeScreen(navController: NavHostController) {
     var selectedTab by remember { mutableStateOf(0) }
     var selectedCategory by remember { mutableStateOf("Tous") }
     val context = LocalContext.current
-    val categories = listOf("Tous", "T-Shirts", "Pantalons", "SweatsGilets")
+    val categories = listOf("Tous", "T-Shirts", "Pantalons", "SweatsGilets", "Couvre-chefs", "Chaussures", "Vestes")
 
     Scaffold(
         topBar = {
@@ -202,23 +204,40 @@ fun getClothingById(id: String, context: Context): ClothingItem? {
 }
 
 @Composable
-fun CategorySelector(categories: List<String>,
-                     selectedCategory: String,
-                     onCategorySelected: (String) -> Unit) {
-    Row(modifier = Modifier.fillMaxWidth().padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly) {
+fun CategorySelector(
+    categories: List<String>,
+    selectedCategory: String,
+    onCategorySelected: (String) -> Unit
+) {
+    val scrollState = rememberScrollState()
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .horizontalScroll(scrollState),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         categories.forEach { category ->
             val isSelected = category == selectedCategory
             Text(
                 text = category,
-                modifier = Modifier.clickable { onCategorySelected(category) },
+                modifier = Modifier
+                    .clickable { onCategorySelected(category) }
+                    .background(
+                        if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                        else Color.Transparent,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
                 style = MaterialTheme.typography.labelLarge,
                 color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
-                else DresslyGray, // Different color when selected
+                else DresslyGray
             )
         }
     }
 }
+
 
 @Composable
 fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
