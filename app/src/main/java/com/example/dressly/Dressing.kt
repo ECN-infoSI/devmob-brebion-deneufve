@@ -238,7 +238,6 @@ fun CategorySelector(
     }
 }
 
-
 @Composable
 fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     NavigationBar {
