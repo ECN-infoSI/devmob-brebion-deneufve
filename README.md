@@ -73,7 +73,7 @@ Dressly/
 
 ---
 ## 🛠️ Configuration Minimale du Téléphone
-- **Système d'exploitation** : Android 8.0 (Oreo) ou supérieur.
+- **Système d'exploitation** : Android 7.0 (Nougat) ou supérieur.
 - **RAM** : Minimum 2 Go.
 - **Stockage** : 50 Mo d'espace disponible.
 - **Permissions** : Accès à la galerie et à l'appareil photo pour ajouter des images de vêtements.
